@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
     android:descendantFocusability="blocksDescendants">
 
 
@@ -11,50 +14,52 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="TextView" />
+        android:text="Desarollador"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/tvDescripcion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/tvCategoria"
-        android:text="TextView" />
+        android:text="DESAROLLO DE AM"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvHora"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_above="@+id/checkBox"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp" />
+        android:text="Horas: 11 Máx - $/Hora: 10.25"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/tvDescripcion"/>
 
     <ImageView
         android:id="@+id/bandera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_below="@+id/tvCategoria"
-        android:layout_toEndOf="@+id/tvHora"
-        android:layout_marginStart="27dp" />
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ar"
+        android:layout_alignTop="@id/tvHora"
+        android:layout_toRightOf="@id/tvHora"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-2dp"/>
 
     <TextView
         android:id="@+id/tvFechaFin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_alignBottom="@+id/checkBox"
-        android:layout_alignParentStart="true" />
+        android:text="Fecha fin: 2017-09-20"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/tvHora" />
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/bandera"
-        android:layout_below="@+id/bandera"
-        android:duplicateParentState="false"
         android:text="@string/enIngles"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/tvHora"
+        android:layout_toRightOf="@id/tvFechaFin"
         android:clickable="false"/>
 
 </RelativeLayout>

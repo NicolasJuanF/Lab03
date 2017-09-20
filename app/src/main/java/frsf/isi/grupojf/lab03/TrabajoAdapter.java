@@ -2,6 +2,7 @@ package frsf.isi.grupojf.lab03;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import java.util.List;
 public class TrabajoAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     List<Trabajo> listaTrabajos;
-
 
     @Override
     public int getCount() {
@@ -44,35 +44,39 @@ public class TrabajoAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View row = view;
-        ViewHolder holder = (ViewHolder) row.getTag();
+
         if(row == null){
             row = inflater.inflate(R.layout.content_ofertalaboral,viewGroup,false);
-
         }
+
+        ViewHolder holder = (ViewHolder) row.getTag();
 
         if (holder == null) {
             holder = new ViewHolder(row);
             row.setTag(holder);
         }
 
+        Log.d("Entra?","SI");
+
+
         holder.tvCategoria.setText((String) this.getItem(i).getCategoria().getDescripcion());
 
         holder.tvDescripcion.setText((String) this.getItem(i).getDescripcion());
         switch (this.getItem(i).getMonedaPago()){
             case 1 :
-                holder.bandera.setImageResource(R.id.us.png);
+                holder.bandera.setImageResource(R.drawable.us);
                 break;
             case 2 :
-                holder.bandera.setImageResource(R.id.eu.png);
+                holder.bandera.setImageResource(R.drawable.eu);
                 break;
             case 3 :
-                holder.bandera.setImageResource(R.id.ar.png);
+                holder.bandera.setImageResource(R.drawable.ar);
                 break;
             case 4 :
-                holder.bandera.setImageResource(R.id.uk.png);
+                holder.bandera.setImageResource(R.drawable.uk);
                 break;
             case 5 :
-                holder.bandera.setImageResource(R.id.br.png);
+                holder.bandera.setImageResource(R.drawable.br);
                 break;
         }
 
