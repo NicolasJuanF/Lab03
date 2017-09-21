@@ -8,5 +8,9 @@
     tools:context="frsf.isi.grupojf.lab03.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <ListView
+        android:id="@+id/lvListaTrabajos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 
 </android.support.constraint.ConstraintLayout>

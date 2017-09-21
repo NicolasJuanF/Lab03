@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,51 +20,55 @@ import java.util.List;
  */
 
 public class TrabajoAdapter extends BaseAdapter {
+    private Context context;
     private LayoutInflater inflater;
     List<Trabajo> listaTrabajos;
 
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    @Override
-    public Trabajo getItem(int i) {
-        return listaTrabajos.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
-
-    public TrabajoAdapter(Context context,List<Trabajo> listaTrabajos) {
-        inflater = LayoutInflater.from(context);
+    public TrabajoAdapter(Context context, List<Trabajo> listaTrabajos) {
+        this.context = context;
         this.listaTrabajos = listaTrabajos;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View row = view;
+    public int getCount() {
+        return listaTrabajos.size();
+    }
 
-        if(row == null){
-            row = inflater.inflate(R.layout.content_ofertalaboral,viewGroup,false);
+    @Override
+    public Trabajo getItem(int position) {
+        return listaTrabajos.get(position);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).
+                    inflate(R.layout.content_ofertalaboral, parent, false);
         }
 
-        ViewHolder holder = (ViewHolder) row.getTag();
+        ViewHolder holder = (ViewHolder) convertView.getTag();
 
         if (holder == null) {
-            holder = new ViewHolder(row);
-            row.setTag(holder);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
         }
 
         Log.d("Entra?","SI");
 
+        Trabajo trabajo = (Trabajo) getItem(position);
 
-        holder.tvCategoria.setText((String) this.getItem(i).getCategoria().getDescripcion());
 
-        holder.tvDescripcion.setText((String) this.getItem(i).getDescripcion());
-        switch (this.getItem(i).getMonedaPago()){
+        holder.tvCategoria.setText(trabajo.getCategoria().getDescripcion());
+
+        holder.tvDescripcion.setText(trabajo.getDescripcion());
+
+        switch (trabajo.getMonedaPago()){
             case 1 :
                 holder.bandera.setImageResource(R.drawable.us);
                 break;
@@ -80,12 +86,15 @@ public class TrabajoAdapter extends BaseAdapter {
                 break;
         }
 
-        holder.checkBox.setChecked((Boolean) this.getItem(i).getRequiereIngles());
-        holder.tvFechaFin.setText((String) this.getItem(i).getFechaEntrega().toString());
-        holder.tvHora.setText((String) this.getItem(i).getHorasPresupuestadas().toString());
+        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+
+        holder.checkBox.setChecked(trabajo.getRequiereIngles());
+        holder.tvFechaFin.setText("Fecha entrega: " + simpleDate.format(trabajo.getFechaEntrega()));
+        holder.tvHora.setText("Horas: " + trabajo.getHorasPresupuestadas().toString()
+                + " - Máx $/Hora: " + String.format( "%.2f", trabajo.getPrecioMaximoHora() ));
 
 
-        return row;
+        return convertView;
     }
 
     class ViewHolder {
