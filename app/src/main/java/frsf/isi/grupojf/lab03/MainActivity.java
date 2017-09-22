@@ -1,5 +1,6 @@
 package frsf.isi.grupojf.lab03;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,17 +8,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.ArraySet;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ListView lvListaTrabajos;
+    TrabajoAdapter trabajoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
         lvListaTrabajos = (ListView) findViewById(R.id.lvListaTrabajos);
 
-        TrabajoAdapter trabajoAdapter = new TrabajoAdapter(this, Arrays.asList(Trabajo.TRABAJOS_MOCK));
+        List<Trabajo> listaTrabajos = new LinkedList<>(Arrays.asList(Trabajo.TRABAJOS_MOCK));
+
+        trabajoAdapter = new TrabajoAdapter(this, listaTrabajos);
         lvListaTrabajos.setAdapter(trabajoAdapter);
+        registerForContextMenu(lvListaTrabajos);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +52,39 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    /* Creación del menú contextual */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        /* Esto se hace para mostrar un Toast con el elemento seleccionado de la lista
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        Trabajo trabajo = trabajoAdapter.getItem(info.position);
+        Toast toast = Toast.makeText(getApplicationContext(), "Se hizo algo " + trabajo.getDescripcion(), Toast.LENGTH_SHORT);
+        toast.show();
+        */
+
+        MenuInflater inflater = getMenuInflater();
+        menu.setHeaderTitle("Acciones");
+        inflater.inflate(R.menu.main_context_menu, menu);
+    }
+
+    /* Acciones del menú contextual */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
+            case R.id.itBorrar:
+                //Acá se debería tener un método en la clase Adapter que retorne la lista
+                trabajoAdapter.removeItem(info.position);
+                trabajoAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override

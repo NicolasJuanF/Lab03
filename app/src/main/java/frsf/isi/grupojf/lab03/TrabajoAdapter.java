@@ -44,6 +44,7 @@ public class TrabajoAdapter extends BaseAdapter {
         return i;
     }
 
+    public Trabajo removeItem(int i) { return this.listaTrabajos.remove(i);}
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -61,7 +62,7 @@ public class TrabajoAdapter extends BaseAdapter {
 
         Log.d("Entra?","SI");
 
-        Trabajo trabajo = (Trabajo) getItem(position);
+        Trabajo trabajo = getItem(position);
 
 
         holder.tvCategoria.setText(trabajo.getCategoria().getDescripcion());
@@ -112,6 +113,7 @@ public class TrabajoAdapter extends BaseAdapter {
             this.tvFechaFin= (TextView) base.findViewById(R.id.tvFechaFin);
             this.tvHora= (TextView) base.findViewById(R.id.tvHora);
             this.checkBox = (CheckBox) base.findViewById(R.id.checkBox);
+            checkBox.setEnabled(false);
         }
     }
 
