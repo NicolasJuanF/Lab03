@@ -1,6 +1,7 @@
 package frsf.isi.grupojf.lab03;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -24,9 +26,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ListView lvListaTrabajos;
     TrabajoAdapter trabajoAdapter;
+    FloatingActionButton btnNuevoTrabajo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,23 +38,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        btnNuevoTrabajo = (FloatingActionButton) findViewById(R.id.btnNuevoTrabajo);
+        btnNuevoTrabajo.setOnClickListener(this);
 
         lvListaTrabajos = (ListView) findViewById(R.id.lvListaTrabajos);
-
         List<Trabajo> listaTrabajos = new LinkedList<>(Arrays.asList(Trabajo.TRABAJOS_MOCK));
-
         trabajoAdapter = new TrabajoAdapter(this, listaTrabajos);
         lvListaTrabajos.setAdapter(trabajoAdapter);
         registerForContextMenu(lvListaTrabajos);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     /* Creación del menú contextual */
@@ -78,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.itBorrar:
-                //Acá se debería tener un método en la clase Adapter que retorne la lista
-                trabajoAdapter.removeItem(info.position);
+                Trabajo trabajoEliminado = trabajoAdapter.removeItem(info.position);
                 trabajoAdapter.notifyDataSetChanged();
+                Toast toast = Toast.makeText(getApplicationContext(), "Se eliminó " + trabajoEliminado.getDescripcion(), Toast.LENGTH_SHORT);
+                toast.show();
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -107,5 +103,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnNuevoTrabajo:
+                Intent intent = new Intent(this, AltaTrabajoActivity.class);
+                startActivityForResult(intent,1);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String oferta = data.getExtras().getString("OFERTA");
+
+        Toast toast = Toast.makeText(getApplicationContext(), oferta, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
