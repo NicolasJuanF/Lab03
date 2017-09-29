@@ -119,9 +119,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String oferta = data.getExtras().getString("OFERTA");
+        //Si se canceló el alta de oferta
+        if (resultCode == RESULT_CANCELED) {
+        }
+        //Si se confirmó la creación de la oferta
+        else {
+            String oferta = data.getExtras().getString("OFERTA");
 
-        Toast toast = Toast.makeText(getApplicationContext(), oferta, Toast.LENGTH_SHORT);
-        toast.show();
+            //Toast toast = Toast.makeText(getApplicationContext(), oferta, Toast.LENGTH_SHORT);
+            //toast.show();
+            int id_trabajo = trabajoAdapter.getCount();
+            Trabajo trabajoNuevo = new Trabajo(id_trabajo, oferta);
+
+            trabajoAdapter.addItem(trabajoNuevo);
+            trabajoAdapter.notifyDataSetChanged();
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Se agregó la oferta: " + oferta, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+
     }
 }

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="frsf.isi.grupojf.lab03.AltaTrabajoActivity"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_weight="0.5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Categoría" />
+        <Spinner
+            android:id="@+id/spCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"></Spinner>
+
+        <TextView
+            android:id="@+id/tvOferta"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingrese oferta laboral" />
+        <EditText
+            android:id="@+id/etOferta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvHoras"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Horas de trabajo estimadas" />
+        <EditText
+            android:id="@+id/etHoras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvFecha"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha de entrega" />
+        <EditText
+            android:id="@+id/etFecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_weight="0.5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvPrecio"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pago máximo por hora" />
+        <EditText
+            android:id="@+id/etPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvMoneda"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moneda de pago"/>
+
+        <RadioGroup
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:id="@+id/rbMoneda"
+            android:layout_below="@id/tvMoneda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/rbAr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginLeft="-5dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="10dp"
+                android:src="@drawable/ar"/>
+
+            <RadioButton
+                android:id="@+id/rbUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginLeft="-5dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="10dp"
+                android:src="@drawable/us"/>
+
+            <RadioButton
+                android:id="@+id/rbEu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginLeft="-5dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="10dp"
+                android:src="@drawable/eu"/>
+
+            <RadioButton
+                android:id="@+id/rbUk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginLeft="-5dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="10dp"
+                android:src="@drawable/uk"/>
+
+            <RadioButton
+                android:id="@+id/rbBr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginLeft="-5dp"
+                android:layout_gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="10dp"
+                android:src="@drawable/br"/>
+        </RadioGroup>
+
+
+        <CheckBox
+            android:layout_below="@id/rbMoneda"
+            android:layout_marginTop="15dp"
+            android:id="@+id/cbIngles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conocimiento de inglés"/>
+
+        <LinearLayout
+            android:layout_below="@id/cbIngles"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="35dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnGuardarOferta"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="GUARDAR" />
+            <Button
+                android:id="@+id/btnCancelarOferta"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="CANCELAR" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

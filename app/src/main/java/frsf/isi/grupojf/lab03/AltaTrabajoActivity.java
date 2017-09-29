@@ -18,6 +18,7 @@ import java.util.List;
 
 public class AltaTrabajoActivity extends AppCompatActivity implements View.OnClickListener{
     Button btnGuardarOferta;
+    Button btnCancelarOferta;
     EditText etOferta;
     Spinner spCategoria;
 
@@ -27,39 +28,17 @@ public class AltaTrabajoActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_alta_trabajo);
 
         btnGuardarOferta = (Button) findViewById(R.id.btnGuardarOferta);
+        btnCancelarOferta = (Button) findViewById(R.id.btnCancelarOferta);
+        btnCancelarOferta.setOnClickListener(this);
         btnGuardarOferta.setOnClickListener(this);
 
         etOferta = (EditText) findViewById(R.id.etOferta);
 
         spCategoria = (Spinner) findViewById(R.id.spCategoria);
 
-        // Spinner click listener
-        //spCategoria.setOnItemSelectedListener(this);
-
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        /*
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
-        */
-
-        List<Categoria> listaCategorias = new LinkedList<>(Arrays.asList(Categoria.CATEGORIAS_MOCK));
-        for (Iterator<Categoria> i = listaCategorias.iterator(); i.hasNext();) {
-            Categoria categoria = i.next();
-            categories.add(categoria.getDescripcion());
-        }
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-        // Drop down layout style - list view with radio button
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Arrays.asList(Categoria.CATEGORIAS_MOCK));
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // attaching data adapter to spinner
         spCategoria.setAdapter(dataAdapter);
     }
 
@@ -69,7 +48,6 @@ public class AltaTrabajoActivity extends AppCompatActivity implements View.OnCli
             case R.id.btnGuardarOferta:
                 // Si el EditText no está vacío recogemos el resultado.
                 if(etOferta.getText().length()!=0) {
-
                     String oferta = etOferta.getText().toString();
                     // Recogemos el intent que ha llamado a esta actividad.
                     Intent i = getIntent();
@@ -84,6 +62,12 @@ public class AltaTrabajoActivity extends AppCompatActivity implements View.OnCli
                     // Si no tenía nada escrito el EditText lo avisamos.
                     Toast.makeText(this,"Debe escribir el nombre de la oferta", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.btnCancelarOferta:
+                // Si se pulsa el botón, establecemos el resultado como cancelado.
+                setResult(RESULT_CANCELED);
+                // Finalizamos la Activity para volver a la anterior
+                finish();
         }
     }
 }

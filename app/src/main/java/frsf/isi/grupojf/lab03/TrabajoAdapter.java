@@ -46,6 +46,8 @@ public class TrabajoAdapter extends BaseAdapter {
 
     public Trabajo removeItem(int i) { return this.listaTrabajos.remove(i);}
 
+    public Boolean addItem(Trabajo trabajo) { return this.listaTrabajos.add(trabajo);}
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
