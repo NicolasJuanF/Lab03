@@ -1,10 +1,14 @@
 package frsf.isi.grupojf.lab03;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.ArraySet;
@@ -78,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast toast = Toast.makeText(getApplicationContext(), "Se eliminó " + trabajoEliminado.getDescripcion(), Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
+            case R.id.itPostularse:
+                Trabajo trabajoPostulado = trabajoAdapter.getItem(info.position);
+                //Crear la tarea asincrona y enviar una notificación
+                new AsyncPostulacion().execute(trabajoPostulado.getDescripcion());
             default:
                 return super.onContextItemSelected(item);
         }
@@ -139,5 +147,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
+    }
+
+
+    private class AsyncPostulacion extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            Context contexto = MainActivity.this;
+            NotificationManager mNotificationManager = (NotificationManager)contexto.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            Notification.Builder builder = new Notification.Builder(contexto)
+                    .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                    .setAutoCancel(true)
+                    .setContentTitle("Se ha postulado con éxito")
+                    .setContentText(params[0]);
+
+
+            //Show the notification
+            mNotificationManager.notify(1, builder.build());
+
+            return null;
+        }
     }
 }
