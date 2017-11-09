@@ -22,6 +22,7 @@ public class Trabajo implements Parcelable {
     private Boolean requiereIngles;
 
     public Trabajo(){
+        //comentario clase trabajo
         Random r =new Random();
         this.monedaPago=1+r.nextInt(4);
         this.requiereIngles=r.nextInt()%2==0;
