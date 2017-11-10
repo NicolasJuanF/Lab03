@@ -167,4 +167,11 @@ public class Trabajo implements Parcelable {
         parcel.writeInt(monedaPago);
         parcel.writeDouble(precioMaximoHora);
     }
+
+    @Override
+    public String toString() {
+        return "Trabajo{" +
+                "descripcion='" + descripcion + '\'' +
+                '}';
+    }
 }

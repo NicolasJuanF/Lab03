@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -149,8 +150,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int id_trabajo = trabajoAdapter.getCount();
             Trabajo trabajoNuevo = new Trabajo(id_trabajo, oferta);
 
-            trabajoDaoSQLite.crearOferta(trabajoNuevo); //guardado de base de datos
-            trabajoDaosJson.crearOferta(trabajoNuevo);//guardado en archivo
+
+//            trabajoDaosJson.crearOferta(trabajoNuevo);//guardado en archivo
+
+            trabajoDaoSQLite.crearOferta(trabajoNuevo); //guardado de base de datos y checkeo que haya guardado
+            List<Trabajo> litaTrabajos = null;
+
+            try {
+                litaTrabajos = trabajoDaoSQLite.listaTrabajos();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            for(Trabajo t: litaTrabajos){
+                Log.d("myTag", t.toString());
+
+            }
+
 
             trabajoAdapter.addItem(trabajoNuevo);
             trabajoAdapter.notifyDataSetChanged();

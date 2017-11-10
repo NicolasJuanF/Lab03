@@ -66,7 +66,7 @@ public class TrabajoDaoSQLite implements TrabajoDao {
 
 
     @Override
-    public List<Trabajo> listaTrabajos() throws ParseException {
+    public List<Trabajo> listaTrabajos(){
         List<Trabajo> trabajos = new ArrayList<>();
         db = dbhelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM trabajo" , null);

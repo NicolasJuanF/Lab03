@@ -12,14 +12,14 @@ public class WorkFromHomeOpenHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TRABAJO= "CREATE TABLE trabajo (" +
             "_id integer primary key autoincrement," +
-            "descripcion text , " +
+            "descripcion text, " +
             "horas_presupuestadas integer, " +
             "fecha_entrega text, " +
-            "precio real ," +
+            "precio real," +
             "moneda integer, " +
-            "requiere_ingles boolean," +
+            "requiere_ingles integer," +
             "id_categoria integer," +
-            "FOREING KEY (id_categoria) REFERENCES categoria(_id));";
+            "FOREIGN KEY (id_categoria) REFERENCES categoria(_id));";
 
     private static WorkFromHomeOpenHelper _INSTANCE;
 
