@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +14,6 @@ import frsf.isi.grupojf.lab03.Categoria;
 import frsf.isi.grupojf.lab03.Trabajo;
 
 
-/**
- * Created by usuario on 8/11/2017.
- */
 
 public class TrabajoDaoSQLite implements TrabajoDao {
     //atributos
@@ -67,7 +66,7 @@ public class TrabajoDaoSQLite implements TrabajoDao {
 
 
     @Override
-    public List<Trabajo> listaTrabajos() {
+    public List<Trabajo> listaTrabajos() throws ParseException {
         List<Trabajo> trabajos = new ArrayList<>();
         db = dbhelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM trabajo" , null);
@@ -79,9 +78,18 @@ public class TrabajoDaoSQLite implements TrabajoDao {
             trabajo.setMonedaPago(c.getInt(c.getColumnIndex("moneda")));
             trabajo.setHorasPresupuestadas(c.getInt(c.getColumnIndex("horas_presupuestadas")));
             Integer requiereIngles = c.getInt(c.getColumnIndex("requiere_ingles"));
-            trabajo.setRequiereIngles(requiereIngles == 1 ? true : false);
+            trabajo.setRequiereIngles(requiereIngles == 1);
 
-            trabajo.setFechaEntrega(c.getString(c.getColumnIndex("fecha_entrega")));//error recibe string requiere date ver!
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            String stringFecha = c.getString(c.getColumnIndex("fecha_entrega"));
+
+
+            try {
+                trabajo.setFechaEntrega(formatoFecha.parse(stringFecha));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
 
             for(Categoria cat : this.listaCategoria()){
                 if(cat.getId() == c.getInt(c.getColumnIndex("id_categoria"))){
@@ -98,8 +106,9 @@ public class TrabajoDaoSQLite implements TrabajoDao {
     }
 
 
-    public void borrarOferta(){
+    public void borrarOferta(Trabajo t){
         //falta implementar, no lo pide enunciado
+
     }
 }
 

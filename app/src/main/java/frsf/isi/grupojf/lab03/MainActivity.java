@@ -30,10 +30,16 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import frsf.isi.grupojf.lab03.Dao.TrabajoDao;
+import frsf.isi.grupojf.lab03.Dao.TrabajoDaoSQLite;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ListView lvListaTrabajos;
     TrabajoAdapter trabajoAdapter;
     FloatingActionButton btnNuevoTrabajo;
+    private TrabajoDao trabajoDaoSQLite;//cada dao se va a encargar de persistir los datos a su mandera
+    private TrabajoDao trabajoDaosJson;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        trabajoDaoSQLite = new TrabajoDaoSQLite(this);
+
+
         btnNuevoTrabajo = (FloatingActionButton) findViewById(R.id.btnNuevoTrabajo);
         btnNuevoTrabajo.setOnClickListener(this);
 
@@ -49,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         List<Trabajo> listaTrabajos = new LinkedList<>(Arrays.asList(Trabajo.TRABAJOS_MOCK));
         trabajoAdapter = new TrabajoAdapter(this, listaTrabajos);
         lvListaTrabajos.setAdapter(trabajoAdapter);
+
         registerForContextMenu(lvListaTrabajos);
 
     }
@@ -130,14 +140,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Si se canceló el alta de oferta
         if (resultCode == RESULT_CANCELED) {
         }
-        //Si se confirmó la creación de la oferta
-        else {
-            String oferta = data.getExtras().getString("OFERTA");
 
+        else {//Si se confirmó la creación de la oferta
+
+            String oferta = data.getExtras().getString("OFERTA");
             //Toast toast = Toast.makeText(getApplicationContext(), oferta, Toast.LENGTH_SHORT);
             //toast.show();
             int id_trabajo = trabajoAdapter.getCount();
             Trabajo trabajoNuevo = new Trabajo(id_trabajo, oferta);
+
+            trabajoDaoSQLite.crearOferta(trabajoNuevo); //guardado de base de datos
+            trabajoDaosJson.crearOferta(trabajoNuevo);//guardado en archivo
 
             trabajoAdapter.addItem(trabajoNuevo);
             trabajoAdapter.notifyDataSetChanged();

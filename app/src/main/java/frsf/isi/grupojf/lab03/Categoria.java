@@ -72,7 +72,7 @@ public class Categoria implements Parcelable{
     public static final Categoria[] CATEGORIAS_MOCK= new Categoria[]{
             new Categoria(1,"Arquitecto"),
             new Categoria(2,"Desarrollador"),
-            new Categoria(3, "Tester"),
+            new Categoria(3,"Tester"),
             new Categoria(4,"Analista"),
             new Categoria(5,"Mobile Developer")
     };

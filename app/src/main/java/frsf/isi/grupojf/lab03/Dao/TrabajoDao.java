@@ -4,8 +4,7 @@ package frsf.isi.grupojf.lab03.Dao;
  * Created by usuario on 8/11/2017.
  */
 
-
-
+        import java.text.ParseException;
         import java.util.List;
 
         import frsf.isi.grupojf.lab03.Categoria;
@@ -35,5 +34,5 @@ public interface TrabajoDao {
      * Retorna la lista de trabajos
      * @return List<Trabajo>
      */
-    List<Trabajo> listaTrabajos();
+    List<Trabajo> listaTrabajos() throws ParseException;
 }
