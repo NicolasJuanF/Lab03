@@ -29,7 +29,9 @@
         android:layout_below="@id/tvOferta"
         android:id="@+id/etOferta"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/tvHoras"
@@ -42,7 +44,10 @@
         android:layout_below="@id/tvHoras"
         android:id="@+id/etHoras"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/tvFecha"
@@ -55,7 +60,10 @@
         android:id="@+id/etFecha"
         android:layout_below="@id/tvFecha"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:imeOptions="actionDone"
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/tvPrecio"
@@ -68,7 +76,10 @@
         android:layout_below="@id/tvPrecio"
         android:id="@+id/etPrecio"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:maxLines="1"/>
 
 
     <TextView
