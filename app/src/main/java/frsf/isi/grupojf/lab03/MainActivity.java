@@ -144,16 +144,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         else {//Si se confirmó la creación de la oferta
 
-            String oferta = data.getExtras().getString("OFERTA");
+            Trabajo trabajo = data.getParcelableExtra("OFERTA");
             //Toast toast = Toast.makeText(getApplicationContext(), oferta, Toast.LENGTH_SHORT);
             //toast.show();
             int id_trabajo = trabajoAdapter.getCount();
-            Trabajo trabajoNuevo = new Trabajo(id_trabajo, oferta);
-
+            trabajo.setId(id_trabajo);
 
 //            trabajoDaosJson.crearOferta(trabajoNuevo);//guardado en archivo
 
-            trabajoDaoSQLite.crearOferta(trabajoNuevo); //guardado de base de datos y checkeo que haya guardado
+            trabajoDaoSQLite.crearOferta(trabajo); //guardado de base de datos y checkeo que haya guardado
             List<Trabajo> litaTrabajos = null;
 
             try {
@@ -167,10 +166,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
 
-            trabajoAdapter.addItem(trabajoNuevo);
+            trabajoAdapter.addItem(trabajo);
             trabajoAdapter.notifyDataSetChanged();
 
-            Toast toast = Toast.makeText(getApplicationContext(), "Se agregó la oferta: " + oferta, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Se agregó la oferta: " + trabajo.getDescripcion(), Toast.LENGTH_SHORT);
             toast.show();
         }
 
