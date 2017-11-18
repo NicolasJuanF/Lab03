@@ -22,21 +22,21 @@ public class TrabajoDaoSQLite implements TrabajoDao {
     private final WorkFromHomeOpenHelper dbhelper;
 
 
-    public TrabajoDaoSQLite(Context c){
-        context = c;
+    public TrabajoDaoSQLite(Context ctx){
+        context = ctx;
         dbhelper = WorkFromHomeOpenHelper.getInstance(context);
     }
 
     public List<Categoria> listaCategoria() {
         List<Categoria> categorias = new ArrayList<>();
         db = dbhelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM categoria" , null);
+        Cursor cursor = db.rawQuery("SELECT * FROM" + Constants.TABLA_CATEGORIA, null);
 
         // Por cada tubla retornada
         while(cursor.moveToNext()){
             Categoria categoria = new Categoria();
-            categoria.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            categoria.setDescripcion(cursor.getString(cursor.getColumnIndex("descripcion")));
+            categoria.setId(cursor.getInt(cursor.getColumnIndex(Constants.ID_CATEGORIA)));
+            categoria.setDescripcion(cursor.getString(cursor.getColumnIndex(Constants.DESCRIPCION_CATEGORIA)));
             categorias.add(categoria);
         }
 
@@ -53,14 +53,14 @@ public class TrabajoDaoSQLite implements TrabajoDao {
         ContentValues cv = new ContentValues();
 
         //put ('columna, valor)
-        cv.put("descripcion", unTrabajo.getDescripcion());
-        cv.put("fecha_entrega", unTrabajo.getFechaEntrega().toString());
-        cv.put("horas_presupuestadas", unTrabajo.getHorasPresupuestadas());
-        cv.put("moneda",unTrabajo.getMonedaPago());
-        cv.put("precio", unTrabajo.getPrecioMaximoHora());
-        cv.put("requiere_ingles", unTrabajo.getRequiereIngles());
-        cv.put("id_categoria", unTrabajo.getCategoria().getId());
-        db.insert("trabajo",null, cv);
+        cv.put(Constants.DESCRIPCION_TRABAJO, unTrabajo.getDescripcion());
+        cv.put(Constants.FECHA_ENTREGA, unTrabajo.getFechaEntrega().toString());
+        cv.put(Constants.HORAS_PRESUPUESTADAS, unTrabajo.getHorasPresupuestadas());
+        cv.put(Constants.MONEDA,unTrabajo.getMonedaPago());
+        cv.put(Constants.PRECIO_MAXIMO, unTrabajo.getPrecioMaximoHora());
+        cv.put(Constants.REQUIERE_INGLES, unTrabajo.getRequiereIngles());
+        cv.put(Constants.CATEGORIA_FK, unTrabajo.getCategoria().getId());
+        db.insert(Constants.TABLA_TRABAJO,null, cv);
         db.close();
     }
 
@@ -69,19 +69,19 @@ public class TrabajoDaoSQLite implements TrabajoDao {
     public List<Trabajo> listaTrabajos(){
         List<Trabajo> trabajos = new ArrayList<>();
         db = dbhelper.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM trabajo" , null);
-        while(c.moveToNext()){
+        Cursor cursor = db.rawQuery("SELECT * FROM" + Constants.TABLA_TRABAJO , null);
+        while(cursor.moveToNext()){
             Trabajo trabajo = new Trabajo();
-            trabajo.setId(c.getInt(c.getColumnIndex("_id")));
-            trabajo.setDescripcion(c.getString(c.getColumnIndex("descripcion")));
-            trabajo.setPrecioMaximoHora(c.getDouble(c.getColumnIndex("precio"))); //precio mas por hora
-            trabajo.setMonedaPago(c.getInt(c.getColumnIndex("moneda")));
-            trabajo.setHorasPresupuestadas(c.getInt(c.getColumnIndex("horas_presupuestadas")));
-            Integer requiereIngles = c.getInt(c.getColumnIndex("requiere_ingles"));
+            trabajo.setId(cursor.getInt(cursor.getColumnIndex(Constants.ID_TRABAJO)));
+            trabajo.setDescripcion(cursor.getString(cursor.getColumnIndex(Constants.DESCRIPCION_TRABAJO)));
+            trabajo.setPrecioMaximoHora(cursor.getDouble(cursor.getColumnIndex(Constants.PRECIO_MAXIMO))); //precio mas por hora
+            trabajo.setMonedaPago(cursor.getInt(cursor.getColumnIndex(Constants.MONEDA)));
+            trabajo.setHorasPresupuestadas(cursor.getInt(cursor.getColumnIndex(Constants.HORAS_PRESUPUESTADAS)));
+            Integer requiereIngles = cursor.getInt(cursor.getColumnIndex(Constants.REQUIERE_INGLES));
             trabajo.setRequiereIngles(requiereIngles == 1);
 
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-            String stringFecha = c.getString(c.getColumnIndex("fecha_entrega"));
+            String stringFecha = cursor.getString(cursor.getColumnIndex(Constants.FECHA_ENTREGA));
 
 
             try {
@@ -92,23 +92,18 @@ public class TrabajoDaoSQLite implements TrabajoDao {
 
 
             for(Categoria cat : this.listaCategoria()){
-                if(cat.getId() == c.getInt(c.getColumnIndex("id_categoria"))){
+                if(cat.getId() == cursor.getInt(cursor.getColumnIndex(Constants.CATEGORIA_FK))){
                     trabajo.setCategoria(cat);
                     break;
                 }
             }
             trabajos.add(trabajo);
         }
-        c.close();
+        cursor.close();
         db.close();
 
         return trabajos;
     }
 
-
-    public void borrarOferta(Trabajo t){
-        //falta implementar, no lo pide enunciado
-
-    }
 }
 

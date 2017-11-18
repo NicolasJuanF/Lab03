@@ -3,6 +3,7 @@ package frsf.isi.grupojf.lab03;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -56,7 +57,7 @@ public class AltaTrabajoActivity extends AppCompatActivity implements View.OnCli
         checkIngles = (CheckBox) findViewById(R.id.cbIngles);
 
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Arrays.asList(Categoria.CATEGORIAS_MOCK));
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Categoria.CATEGORIAS_MOCK);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spCategoria.setAdapter(dataAdapter);
@@ -86,10 +87,7 @@ public class AltaTrabajoActivity extends AppCompatActivity implements View.OnCli
                         e.printStackTrace();
                     }
                     nuevoTrabajo.setFechaEntrega(fecha);
-                    // Recogemos el intent que ha llamado a esta actividad.
 
-                    // Le metemos el resultado que queremos mandar a la
-                    // actividad principal.
                     intent.putExtra("OFERTA", nuevoTrabajo);
                     setResult(RESULT_OK, intent);
 

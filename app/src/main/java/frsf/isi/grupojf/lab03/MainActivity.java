@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
@@ -32,14 +33,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import frsf.isi.grupojf.lab03.Dao.TrabajoDao;
+import frsf.isi.grupojf.lab03.Dao.TrabajoDaoJson;
 import frsf.isi.grupojf.lab03.Dao.TrabajoDaoSQLite;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ListView lvListaTrabajos;
     TrabajoAdapter trabajoAdapter;
     FloatingActionButton btnNuevoTrabajo;
+    TextView sin_trabajos;
     private TrabajoDao trabajoDaoSQLite;//cada dao se va a encargar de persistir los datos a su mandera
-    private TrabajoDao trabajoDaosJson;
+    private TrabajoDao trabajoDaoJson;
 
 
     @Override
@@ -49,19 +52,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        trabajoDaoSQLite = new TrabajoDaoSQLite(this);
+
+        //creo ambos dao, para leer la lista uso archivo (json) como pide el enunciado
+//        trabajoDaoSQLite = new TrabajoDaoSQLite(this);
+        trabajoDaoJson = new TrabajoDaoJson(this);
+        List<Categoria> categorias = trabajoDaoJson.listaCategoria();
 
 
         btnNuevoTrabajo = (FloatingActionButton) findViewById(R.id.btnNuevoTrabajo);
         btnNuevoTrabajo.setOnClickListener(this);
-
+        sin_trabajos = (TextView) findViewById(R.id.sin_trabajos);
         lvListaTrabajos = (ListView) findViewById(R.id.lvListaTrabajos);
-        List<Trabajo> listaTrabajos = new LinkedList<>(Arrays.asList(Trabajo.TRABAJOS_MOCK));
+        List<Trabajo> listaTrabajos = null;
+        try {
+            listaTrabajos = trabajoDaoJson.listaTrabajos();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+//        List<Trabajo> listaTrabajos = new LinkedList<>(Arrays.asList(Trabajo.TRABAJOS_MOCK));
+
+        if(listaTrabajos.isEmpty()){//si esta vacia muestro mensaje que dice que no hay trabajos
+            sin_trabajos.setVisibility(View.VISIBLE);
+        }
         trabajoAdapter = new TrabajoAdapter(this, listaTrabajos);
         lvListaTrabajos.setAdapter(trabajoAdapter);
 
         registerForContextMenu(lvListaTrabajos);
-
     }
 
     /* Creación del menú contextual */
@@ -145,26 +162,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else {//Si se confirmó la creación de la oferta
 
             Trabajo trabajo = data.getParcelableExtra("OFERTA");
+            Log.d("trabajo_cread" ,trabajo.toString());
+
             //Toast toast = Toast.makeText(getApplicationContext(), oferta, Toast.LENGTH_SHORT);
             //toast.show();
             int id_trabajo = trabajoAdapter.getCount();
             trabajo.setId(id_trabajo);
 
-//            trabajoDaosJson.crearOferta(trabajoNuevo);//guardado en archivo
+            if(sin_trabajos.getVisibility() == View.VISIBLE){ //escondo mensaje si esta viisble porque ahora hay por lo menos un trabajo
+                sin_trabajos.setVisibility(View.INVISIBLE);
+            }
 
-            trabajoDaoSQLite.crearOferta(trabajo); //guardado de base de datos y checkeo que haya guardado
+            trabajoDaoJson.crearOferta(trabajo);//guardado en archivo
+
+//            trabajoDaoSQLite.crearOferta(trabajo); //guardado de base de datos y checkeo que haya guardado
             List<Trabajo> litaTrabajos = null;
 
             try {
-                litaTrabajos = trabajoDaoSQLite.listaTrabajos();
+                litaTrabajos = trabajoDaoJson.listaTrabajos();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             for(Trabajo t: litaTrabajos){
                 Log.d("myTag", t.toString());
-
             }
-
 
             trabajoAdapter.addItem(trabajo);
             trabajoAdapter.notifyDataSetChanged();
@@ -189,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .setAutoCancel(true)
                     .setContentTitle("Se ha postulado con éxito")
                     .setContentText(params[0]);
-
 
             //Show the notification
             mNotificationManager.notify(1, builder.build());

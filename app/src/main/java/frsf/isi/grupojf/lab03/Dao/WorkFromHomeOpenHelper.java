@@ -1,25 +1,29 @@
 package frsf.isi.grupojf.lab03.Dao;
 
-        import android.content.Context;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class WorkFromHomeOpenHelper extends SQLiteOpenHelper {
 
-    //correctamente seria hacerlo con constantes, en una clase java distinta
-    private static final String SQL_CREATE_CATEGORIA = "CREATE TABLE categoria (_id integer primary key autoincrement, descripcion text);";
 
-    private static final String SQL_CREATE_TRABAJO= "CREATE TABLE trabajo (" +
-            "_id integer primary key autoincrement," +
-            "descripcion text, " +
-            "horas_presupuestadas integer, " +
-            "fecha_entrega text, " +
-            "precio real," +
-            "moneda integer, " +
-            "requiere_ingles integer," +
-            "id_categoria integer," +
-            "FOREIGN KEY (id_categoria) REFERENCES categoria(_id));";
+    private static final String SQL_CREATE_CATEGORIA = "CREATE TABLE "+Constants.TABLA_CATEGORIA +"(" +
+            Constants.ID_CATEGORIA +"primary key autoincrement," +
+            Constants.DESCRIPCION_CATEGORIA+ "text);";
+
+
+    private static final String SQL_CREATE_TRABAJO= "CREATE TABLE "+ Constants.TABLA_TRABAJO+"(" +
+            Constants.ID_TRABAJO +"integer primary key autoincrement," +
+            Constants.DESCRIPCION_TRABAJO + "text," +
+            Constants.HORAS_PRESUPUESTADAS + "integer, " +
+            Constants.FECHA_ENTREGA + "text, " +
+            Constants.PRECIO_MAXIMO + "precio real," +
+            Constants.MONEDA +"integer, " +
+            Constants.REQUIERE_INGLES + "integer," +
+            Constants.CATEGORIA_FK + "integer," +
+            "FOREIGN KEY ("+ Constants.CATEGORIA_FK+") REFERENCES "+Constants.TABLA_CATEGORIA+"("+Constants.ID_CATEGORIA+"));";
+
 
     private static WorkFromHomeOpenHelper _INSTANCE;
 

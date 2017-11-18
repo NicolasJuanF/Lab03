@@ -41,13 +41,14 @@
         android:layout_height="wrap_content"
         android:text="Horas de trabajo estimadas" />
     <EditText
-        android:layout_below="@id/tvHoras"
         android:id="@+id/etHoras"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:imeOptions="actionDone"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:layout_below="@+id/tvHoras"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/tvFecha"

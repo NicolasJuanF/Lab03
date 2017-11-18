@@ -132,25 +132,25 @@ public class Trabajo implements Parcelable {
     }
 
     public static final Trabajo[] TRABAJOS_MOCK= new Trabajo[]{
-            new Trabajo(1,"Proyecto ABc"),
-            new Trabajo(2,"Sistema de Gestion"),
-            new Trabajo(3, "Aplicacion XYZ"),
-            new Trabajo(4,"Modulo NN1"),
-            new Trabajo(5,"Sistema de adminisracion TDF"),
-            new Trabajo(6,"Aplicacion OYU 66"),
-            new Trabajo(7,"Gestion de laboratorios"),
-            new Trabajo(8,"Sistema Universidades"),
-            new Trabajo(9,"Portal Compras"),
-            new Trabajo(10,"Gestion RRHH"),
-            new Trabajo(11,"Traductor Automatico"),
-            new Trabajo(12,"Alquileres online"),
-            new Trabajo(13,"Gestion financiera"),
-            new Trabajo(14,"Modulo Seguridad"),
-            new Trabajo(15,"consultoria performance"),
-            new Trabajo(16,"Ecommerce Uah"),
-            new Trabajo(17,"Portal Web Htz"),
-            new Trabajo(18,"Sitio Coroporativo"),
-            new Trabajo(19,"Aplicacion www1")
+//            new Trabajo(1,"Proyecto ABc"),
+//            new Trabajo(2,"Sistema de Gestion"),
+//            new Trabajo(3, "Aplicacion XYZ"),
+//            new Trabajo(4,"Modulo NN1"),
+//            new Trabajo(5,"Sistema de adminisracion TDF"),
+//            new Trabajo(6,"Aplicacion OYU 66"),
+//            new Trabajo(7,"Gestion de laboratorios"),
+//            new Trabajo(8,"Sistema Universidades"),
+//            new Trabajo(9,"Portal Compras"),
+//            new Trabajo(10,"Gestion RRHH"),
+//            new Trabajo(11,"Traductor Automatico"),
+//            new Trabajo(12,"Alquileres online"),
+//            new Trabajo(13,"Gestion financiera"),
+//            new Trabajo(14,"Modulo Seguridad"),
+//            new Trabajo(15,"consultoria performance"),
+//            new Trabajo(16,"Ecommerce Uah"),
+//            new Trabajo(17,"Portal Web Htz"),
+//            new Trabajo(18,"Sitio Coroporativo"),
+//            new Trabajo(19,"Aplicacion www1")
     };
 
     @Override
@@ -171,7 +171,14 @@ public class Trabajo implements Parcelable {
     @Override
     public String toString() {
         return "Trabajo{" +
-                "descripcion='" + descripcion + '\'' +
+                "id=" + id +
+                ", descripcion='" + descripcion + '\'' +
+                ", horasPresupuestadas=" + horasPresupuestadas +
+                ", categoria=" + categoria +
+                ", precioMaximoHora=" + precioMaximoHora +
+                ", fechaEntrega=" + fechaEntrega +
+                ", monedaPago=" + monedaPago +
+                ", requiereIngles=" + requiereIngles +
                 '}';
     }
 }
